@@ -104,7 +104,7 @@ class Render_Unblocker_Public {
 		global $stylesheet_no_scripts;
 		$stylesheet_no_scripts .= $tag;
 
-		return '<link id="' . $handle . '-css" rel="preload" href="' . $href . '" as="style" onload="this.rel=\'stylesheet\'" media="' . $media . '">\n';
+		return '<link id="' . $handle . '-css" rel="preload" href="' . $href . '" as="style" onload="this.rel=\'stylesheet\'" media="' . $media . '">' . "\n";
 	}
 
 	/**
