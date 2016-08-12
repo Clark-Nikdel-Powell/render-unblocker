@@ -104,7 +104,7 @@ class Render_Unblocker_Public {
 		global $stylesheet_no_scripts;
 		$stylesheet_no_scripts .= $tag;
 
-		return '<link id="' . $handle . '-css" rel="preload" href="' . $href . '" as="style" onload="this.rel=\'stylesheet\'" media="' . $media . '">';
+		return '<link id="' . $handle . '-css" rel="preload" href="' . $href . '" as="style" onload="this.rel=\'stylesheet\'" media="' . $media . '">\n';
 	}
 
 	/**
@@ -116,7 +116,7 @@ class Render_Unblocker_Public {
 
 		$wp_scripts = wp_scripts();
 		$scripts    = [];
-		$excludes   = apply_filter( 'no_kill_scripts', [] );
+		$excludes   = apply_filters( 'no_kill_scripts', [] );
 		foreach ( $wp_scripts->in_footer as $s ) {
 			if ( in_array( $s, $excludes ) ) {
 				continue;
