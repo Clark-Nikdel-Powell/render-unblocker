@@ -72,7 +72,7 @@ class Render_Unblocker_Public {
 			return $tag;
 		}
 
-		$excludes = apply_filter( 'no_kill_scripts', [] );
+		$excludes = apply_filters( 'no_kill_scripts', [] );
 		if ( in_array( $handle, $excludes ) ) {
 			return $tag;
 		}
