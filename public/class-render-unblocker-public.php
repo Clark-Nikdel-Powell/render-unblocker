@@ -108,6 +108,19 @@ class Render_Unblocker_Public {
 	}
 
 	/**
+	 * Outputs critical css
+	 *
+	 * @since 1.1.0
+	 */
+	public function critical_css() {
+
+		$critical_css_path = apply_filters( 'critical_css_path', get_template_directory() . '/critical.css' );
+		?>
+		<style><?php include $critical_css_path; ?></style>
+		<?php
+	}
+
+	/**
 	 * Outputs stylesheets and scripts.
 	 *
 	 * @since 1.0.0
@@ -126,8 +139,6 @@ class Render_Unblocker_Public {
 		if ( ! $scripts ) {
 			return;
 		}
-
-		$critical_css_path = apply_filters( 'critical_css_path', get_template_directory() . '/critical.css' );
 
 		include_once 'partials/render-unblocker-public-display.php';
 	}

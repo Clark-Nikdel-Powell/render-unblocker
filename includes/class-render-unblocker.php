@@ -163,6 +163,7 @@ class Render_Unblocker {
 		$this->loader->add_filter( 'script_loader_tag', $plugin_public, 'kill_scripts', 10, 3 );
 		$this->loader->add_filter( 'style_loader_tag', $plugin_public, 'preload_styles', 10, 4 );
 
+		$this->loader->add_action( 'wp_head', $plugin_public, 'critical_css', 5 );
 		$this->loader->add_action( 'wp_head', $plugin_public, 'optimized_scripts', 999 );
 	}
 
