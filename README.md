@@ -13,3 +13,5 @@ A WordPress plugin to optimize stylesheet and script delivery.
  `noscript_stylesheet_links` • Add additional stylesheet link tags for output in noscript tag in `head`.
 
 `critical_css_path` • Defaults to critical.css in the theme root. Use this filter to override this default.
+
+`override_optimized_scripts` • Return false to override the render-blocker plugin and stop script killing/loading.

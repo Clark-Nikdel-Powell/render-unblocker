@@ -69,7 +69,7 @@ class Render_Unblocker {
 	public function __construct() {
 
 		$this->plugin_name = 'render-unblocker';
-		$this->version     = '1.1.1';
+		$this->version     = '1.2';
 
 		$this->load_dependencies();
 		$this->set_locale();
