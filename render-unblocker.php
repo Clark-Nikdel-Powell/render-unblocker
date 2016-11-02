@@ -15,8 +15,8 @@
  * @wordpress-plugin
  * Plugin Name:       Render Unblocker
  * Plugin URI:        https://github.com/Clark-Nikdel-Powell/render-unblocker
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
- * Version:           1.2
+ * Description:       Plugin for optimized loading of styles and scripts.
+ * Version:           1.5
  * Author:            Glenn Welser
  * Author URI:        https://clarknikdelpowell.com/agency/people/glenn/
  * License:           GPL-2.0+

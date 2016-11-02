@@ -10,8 +10,10 @@ A WordPress plugin to optimize stylesheet and script delivery.
 
 `no_kill_scripts` • Use this filter to make a script tag output in the normal fashion. Use the script handle.
  
- `noscript_stylesheet_links` • Add additional stylesheet link tags for output in noscript tag in `head`.
+`noscript_stylesheet_links` • Add additional stylesheet link tags for output in noscript tag in `head`.
 
 `critical_css_path` • Defaults to critical.css in the theme root. Use this filter to override this default.
 
-`override_optimized_scripts` • Return false to override the render-blocker plugin and stop script killing/loading.
+`optimize_scripts` • Return false to override the optimization of scripts.
+
+`optimize_sstyles` • Return false to override the optimization of styles.
