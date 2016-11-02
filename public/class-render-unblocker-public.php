@@ -68,7 +68,8 @@ class Render_Unblocker_Public {
 	 */
 	public function kill_scripts( $tag, $handle, $src ) {
 
-		if ( is_admin() ) {
+		$optimize_scripts = apply_filters( 'optimize_scripts', true );
+		if ( ! $optimize_scripts || is_admin() ) {
 			return $tag;
 		}
 
@@ -97,7 +98,8 @@ class Render_Unblocker_Public {
 	 */
 	public function preload_styles( $tag, $handle, $href, $media ) {
 
-		if ( is_admin() || 'print' === $media ) {
+		$optimize_styles = apply_filters( 'optimize_styles', true );
+		if ( ! $optimize_styles || is_admin() || 'print' === $media ) {
 			return $tag;
 		}
 
@@ -114,6 +116,11 @@ class Render_Unblocker_Public {
 	 */
 	public function critical_css() {
 
+		$optimize_styles = apply_filters( 'optimize_styles', true );
+		if ( ! $optimize_styles ) {
+			return;
+		}
+
 		$critical_css_path = apply_filters( 'critical_css_path', get_template_directory() . '/critical.css' );
 		?>
 		<style><?php include $critical_css_path; ?></style>
@@ -126,6 +133,11 @@ class Render_Unblocker_Public {
 	 * @since 1.0.0
 	 */
 	public function optimized_scripts() {
+
+		$optimize_scripts = apply_filters( 'optimize_scripts', true );
+		if ( ! $optimize_scripts ) {
+			return;
+		}
 
 		$wp_scripts = wp_scripts();
 		$scripts    = [];
