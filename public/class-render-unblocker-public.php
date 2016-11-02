@@ -68,10 +68,6 @@ class Render_Unblocker_Public {
 	 */
 	public function kill_scripts( $tag, $handle, $src ) {
 
-		if ( ! apply_filters( 'override_optimized_scripts', true ) ) {
-			return $tag;
-		}
-
 		if ( is_admin() ) {
 			return $tag;
 		}
@@ -130,10 +126,6 @@ class Render_Unblocker_Public {
 	 * @since 1.0.0
 	 */
 	public function optimized_scripts() {
-
-		if ( ! apply_filters( 'override_optimized_scripts', true ) ) {
-			return;
-		}
 
 		$wp_scripts = wp_scripts();
 		$scripts    = [];

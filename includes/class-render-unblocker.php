@@ -147,7 +147,8 @@ class Render_Unblocker {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function define_admin_hooks() { }
+	private function define_admin_hooks() {
+	}
 
 	/**
 	 * Register all of the hooks related to the public-facing functionality
@@ -160,11 +161,18 @@ class Render_Unblocker {
 
 		$plugin_public = new Render_Unblocker_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_filter( 'script_loader_tag', $plugin_public, 'kill_scripts', 10, 3 );
-		$this->loader->add_filter( 'style_loader_tag', $plugin_public, 'preload_styles', 10, 4 );
+		$optimize_scripts = apply_filters( 'optimize_scripts', true );
+		$optimize_styles  = apply_filters( 'optimize_styles', true );
 
-		$this->loader->add_action( 'wp_head', $plugin_public, 'critical_css', 5 );
-		$this->loader->add_action( 'wp_print_footer_scripts', $plugin_public, 'optimized_scripts', 999 );
+		if ( $optimize_scripts ) {
+			$this->loader->add_filter( 'script_loader_tag', $plugin_public, 'kill_scripts', 10, 3 );
+			$this->loader->add_action( 'wp_print_footer_scripts', $plugin_public, 'optimized_scripts', 999 );
+		}
+
+		if ( $optimize_styles ) {
+			$this->loader->add_filter( 'style_loader_tag', $plugin_public, 'preload_styles', 10, 4 );
+			$this->loader->add_action( 'wp_head', $plugin_public, 'critical_css', 5 );
+		}
 	}
 
 	/**
