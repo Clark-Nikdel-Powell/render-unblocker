@@ -190,6 +190,8 @@ class Render_Unblocker_Public {
 		if ( ! $optimize_scripts ) {
 			return;
 		}
+		
+		global $scripts;
 
 		// @formatter:off
 		?>
