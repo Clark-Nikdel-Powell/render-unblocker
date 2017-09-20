@@ -103,6 +103,12 @@ class Render_Unblocker_Public {
 			return $tag;
 		}
 
+		$exclude   = apply_filters( 'no_kill_style', false, $tag, $handle, $href, $media );
+
+		if ( true === $exclude ) {
+			return $tag;
+		}
+
 		global $stylesheet_no_scripts;
 		$stylesheet_no_scripts .= $tag;
 
