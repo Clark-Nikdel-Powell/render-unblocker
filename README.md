@@ -16,4 +16,4 @@ A WordPress plugin to optimize stylesheet and script delivery.
 
 `optimize_scripts` • Return false to override the optimization of scripts.
 
-`optimize_sstyles` • Return false to override the optimization of styles.
+`optimize_styles` • Return false to override the optimization of styles.
