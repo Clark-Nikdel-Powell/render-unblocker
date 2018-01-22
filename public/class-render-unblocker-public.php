@@ -55,6 +55,15 @@ class Render_Unblocker_Public {
 
 	}
 
+	/**
+	 * Filters the rendering of stylesheet LINK tags from HEAD.
+	 *
+	 * @since 2.0
+	 *
+	 * @param $tag
+	 *
+	 * @return string
+	 */
 	public function filter_head_style_tag( $tag ) {
 
 		if ( is_admin() ) {
@@ -67,6 +76,11 @@ class Render_Unblocker_Public {
 		return '';
 	}
 
+	/**
+	 * Output stylesheet LINK tags.
+	 *
+	 * @since 2.0
+	 */
 	public function footer_styles() {
 
 		global $footer_enqueued_styles;
@@ -77,6 +91,11 @@ class Render_Unblocker_Public {
 		<?php
 	}
 
+	/**
+	 * Output JS to load stylesheet.
+	 *
+	 * @since 2.0
+	 */
 	public function script_load_deferred_styles() {
 
 		?>

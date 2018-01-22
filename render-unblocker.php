@@ -16,7 +16,7 @@
  * Plugin Name:       Render Unblocker
  * Plugin URI:        https://github.com/Clark-Nikdel-Powell/render-unblocker
  * Description:       Plugin for optimized loading of styles and scripts.
- * Version:           1.5
+ * Version:           2.0
  * Author:            Glenn Welser
  * Author URI:        https://clarknikdelpowell.com/agency/people/glenn/
  * License:           GPL-2.0+

@@ -69,7 +69,7 @@ class Render_Unblocker {
 	public function __construct() {
 
 		$this->plugin_name = 'render-unblocker';
-		$this->version     = '1.2';
+		$this->version     = '2.0';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -161,9 +161,11 @@ class Render_Unblocker {
 
 		$plugin_public = new Render_Unblocker_Public( $this->get_plugin_name(), $this->get_version() );
 
+		// Optimize script handling
 		$this->loader->add_filter( 'script_loader_tag', $plugin_public, 'kill_scripts', 10, 3 );
 		$this->loader->add_action( 'wp_print_footer_scripts', $plugin_public, 'optimized_scripts', 999 );
 
+		// Optimize style handling
 		$this->loader->add_filter( 'style_loader_tag', $plugin_public, 'filter_head_style_tag', 10 );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'footer_styles', 999998 );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'script_load_deferred_styles', 999999 );
