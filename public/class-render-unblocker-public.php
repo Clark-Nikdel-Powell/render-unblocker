@@ -55,6 +55,35 @@ class Render_Unblocker_Public {
 
 	}
 
+	public function filter_head_style_tag( $tag ) {
+
+		if ( is_admin() ) {
+			return $tag;
+		}
+
+		global $footer_enqueued_styles;
+		$footer_enqueued_styles .= $tag;
+
+		return '';
+	}
+
+	public function footer_styles() {
+
+		global $footer_enqueued_styles;
+		?>
+		<noscript id="deferred-styles">
+			<?php echo $footer_enqueued_styles; ?>
+		</noscript>
+		<?php
+	}
+
+	public function script_load_deferred_styles() {
+
+		?>
+		<script><?php include 'js/render-unblocker-public.min.js'; ?></script>
+		<?php
+	}
+
 	/**
 	 * Stops scripts from outputting standard script tag and loads them into a global array for later use.
 	 *
@@ -85,62 +114,11 @@ class Render_Unblocker_Public {
 	}
 
 	/**
-	 * Adds pre-loading attributes to stylesheet link tags and loads standard tags into global variable for later use.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param $tag
-	 * @param $handle
-	 * @param $href
-	 * @param $media
-	 *
-	 * @return string
-	 */
-	public function preload_styles( $tag, $handle, $href, $media ) {
-
-		$optimize_styles = apply_filters( 'optimize_styles', true );
-		if ( ! $optimize_styles || is_admin() || 'print' === $media ) {
-			return $tag;
-		}
-
-		$exclude   = apply_filters( 'no_kill_style', false, $tag, $handle, $href, $media );
-
-		if ( true === $exclude ) {
-			return $tag;
-		}
-
-		global $stylesheet_no_scripts;
-		$stylesheet_no_scripts .= $tag;
-
-		return '<link id="' . $handle . '-css" rel="preload" href="' . $href . '" as="style" onload="this.rel=\'stylesheet\'" media="' . $media . '">' . "\n";
-	}
-
-	/**
-	 * Outputs critical css
-	 *
-	 * @since 1.1.0
-	 */
-	public function critical_css() {
-
-		$optimize_styles = apply_filters( 'optimize_styles', true );
-		if ( ! $optimize_styles ) {
-			return;
-		}
-
-		$critical_css_path = apply_filters( 'critical_css_path', get_template_directory() . '/critical.css' );
-		?>
-		<style><?php include $critical_css_path; ?></style>
-		<?php
-	}
-
-	/**
 	 * Outputs stylesheets and scripts.
 	 *
 	 * @since 1.0.0
 	 */
 	public function optimized_scripts() {
-
-		$this->style_scripts();
 
 		$optimize_scripts = apply_filters( 'optimize_scripts', true );
 		if ( ! $optimize_scripts ) {
@@ -165,28 +143,6 @@ class Render_Unblocker_Public {
 	}
 
 	/**
-	 * Outputs stylesheet links and required js for loading of optimized styles
-	 *
-	 * @since 1.5.0
-	 */
-	private function style_scripts() {
-
-		$optimize_styles = apply_filters( 'optimize_styles', true );
-		if ( ! $optimize_styles ) {
-			return;
-		}
-
-		global $stylesheet_no_scripts;
-
-		// @formatter:off
-		?>
-		<script>!function(e){"use strict";var t=function(t,n,r){function o(e){return i.body?e():void setTimeout(function(){o(e)})}function a(){d.addEventListener&&d.removeEventListener("load",a),d.media=r||"all"}var l,i=e.document,d=i.createElement("link");if(n)l=n;else{var s=(i.body||i.getElementsByTagName("head")[0]).childNodes;l=s[s.length-1]}var u=i.styleSheets;d.rel="stylesheet",d.href=t,d.media="only x",o(function(){l.parentNode.insertBefore(d,n?l:l.nextSibling)});var f=function(e){for(var t=d.href,n=u.length;n--;)if(u[n].href===t)return e();setTimeout(function(){f(e)})};return d.addEventListener&&d.addEventListener("load",a),d.onloadcssdefined=f,f(a),d};"undefined"!=typeof exports?exports.loadCSS=t:e.loadCSS=t}("undefined"!=typeof global?global:this),function(e){if(e.loadCSS){var t=loadCSS.relpreload={};if(t.support=function(){try{return e.document.createElement("link").relList.supports("preload")}catch(t){return!1}},t.poly=function(){for(var t=e.document.getElementsByTagName("link"),n=0;n<t.length;n++){var r=t[n];"preload"===r.rel&&"style"===r.getAttribute("as")&&(e.loadCSS(r.href,r),r.rel=null)}},!t.support()){t.poly();var n=e.setInterval(t.poly,300);e.addEventListener&&e.addEventListener("load",function(){e.clearInterval(n)}),e.attachEvent&&e.attachEvent("onload",function(){e.clearInterval(n)})}}}(this);</script>
-		<noscript><?php echo apply_filters( 'noscript_stylesheet_links', $stylesheet_no_scripts ) ?></noscript>
-		<?php
-		// @formatter:on
-	}
-
-	/**
 	 * Outputs required js for loading of optimized scripts
 	 * @since 1.5.0
 	 */
@@ -196,7 +152,7 @@ class Render_Unblocker_Public {
 		if ( ! $optimize_scripts ) {
 			return;
 		}
-		
+
 		global $scripts;
 
 		// @formatter:off
