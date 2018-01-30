@@ -46,7 +46,7 @@ class Render_Unblocker_Public {
 	 * @since    1.0.0
 	 *
 	 * @param      string $plugin_name The name of the plugin.
-	 * @param      string $version     The version of this plugin.
+	 * @param      string $version The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
@@ -61,12 +61,14 @@ class Render_Unblocker_Public {
 	 * @since 2.0
 	 *
 	 * @param $tag
+	 * @param $handle
 	 *
 	 * @return string
 	 */
-	public function filter_head_style_tag( $tag ) {
+	public function remove_head_style_tags( $tag, $handle ) {
 
-		if ( is_admin() ) {
+		$exclude_handles = apply_filters( 'ru_exclude_style_from_deferred_load', [] );
+		if ( is_admin() || in_array( $handle, $exclude_handles ) ) {
 			return $tag;
 		}
 
@@ -81,13 +83,13 @@ class Render_Unblocker_Public {
 	 *
 	 * @since 2.0
 	 */
-	public function footer_styles() {
+	public function add_footer_style_tags() {
 
 		global $footer_enqueued_styles;
 		?>
-		<noscript id="deferred-styles">
+        <noscript id="deferred-styles">
 			<?php echo $footer_enqueued_styles; ?>
-		</noscript>
+        </noscript>
 		<?php
 	}
 
@@ -99,7 +101,7 @@ class Render_Unblocker_Public {
 	public function script_load_deferred_styles() {
 
 		?>
-		<script><?php include 'js/render-unblocker-public.min.js'; ?></script>
+        <script><?php include 'js/render-unblocker-public.min.js'; ?></script>
 		<?php
 	}
 
@@ -176,10 +178,16 @@ class Render_Unblocker_Public {
 
 		// @formatter:off
 		?>
-		<script>
-			var scripts = ["<?php echo implode( '","', $scripts ); ?>"];
-			!function (e, t, r) {function n() {for (; d[0] && "loaded" == d[0][f];)c = d.shift(), c[o] = !i.parentNode.insertBefore(c, i)}for (var s, a, c, d = [], i = e.scripts[0], o = "onreadystatechange", f = "readyState"; s = r.shift();)a = e.createElement(t), "async" in i ? (a.async = !1, e.head.appendChild(a)) : i[f] ? (d.push(a), a[o] = n) : e.write("<" + t + ' src="' + s + '" defer></' + t + ">"), a.src = s}(document, "script", scripts);
-		</script>
+        <script>
+            var scripts = ["<?php echo implode( '","', $scripts ); ?>"];
+            !function (e, t, r) {
+                function n() {
+                    for (; d[0] && "loaded" == d[0][f];) c = d.shift(), c[o] = !i.parentNode.insertBefore(c, i)
+                }
+
+                for (var s, a, c, d = [], i = e.scripts[0], o = "onreadystatechange", f = "readyState"; s = r.shift();) a = e.createElement(t), "async" in i ? (a.async = !1, e.head.appendChild(a)) : i[f] ? (d.push(a), a[o] = n) : e.write("<" + t + ' src="' + s + '" defer></' + t + ">"), a.src = s
+            }(document, "script", scripts);
+        </script>
 		<?php
 		// @formatter:on
 	}

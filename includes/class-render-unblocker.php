@@ -166,8 +166,8 @@ class Render_Unblocker {
 		$this->loader->add_action( 'wp_print_footer_scripts', $plugin_public, 'optimized_scripts', 999 );
 
 		// Optimize style handling
-		$this->loader->add_filter( 'style_loader_tag', $plugin_public, 'filter_head_style_tag', 10 );
-		$this->loader->add_action( 'wp_footer', $plugin_public, 'footer_styles', 999998 );
+		$this->loader->add_filter( 'style_loader_tag', $plugin_public, 'remove_head_style_tags', 10, 2 );
+		$this->loader->add_action( 'wp_footer', $plugin_public, 'add_footer_style_tags', 999998 );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'script_load_deferred_styles', 999999 );
 	}
 
